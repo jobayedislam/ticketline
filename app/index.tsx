@@ -1,9 +1,57 @@
+import DestinationInput from "@/components/DestinationInput";
+import { CITIES } from "@/data/data";
+import { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { Appbar, Surface, Text } from "react-native-paper";
+import {
+  Appbar,
+  Button,
+  Card,
+  HelperText,
+  IconButton,
+  Surface,
+} from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const HomeScreen = () => {
   const insets = useSafeAreaInsets();
+  const [fromText, setFromText] = useState<string>("");
+  const [toText, setToText] = useState<string>("");
+  const [errors, setErrors] = useState({
+    from: "",
+    to: "",
+    date: "",
+  });
+
+  const handleSwap = () => {
+    const temp = fromText;
+    setFromText(toText);
+    setToText(temp);
+  };
+
+  const handleSearch = () => {
+    let valid = true;
+    let newErrors = { from: "", to: "", date: "" };
+
+    if (!fromText) {
+      newErrors.from = "Please select a starting point";
+      valid = false;
+    }
+    if (!toText) {
+      newErrors.to = "Please select a destination point";
+      valid = false;
+    }
+    if (fromText && toText && fromText === toText) {
+      newErrors.from = "Starting and destination point cannot be the same.";
+      newErrors.to = "Starting and destination point cannot be the same.";
+      valid = false;
+    }
+
+    setErrors(newErrors);
+
+    if (valid) {
+      console.log("Do something");
+    }
+  };
 
   return (
     <Surface style={[styles.rootSurface, { paddingBottom: insets.bottom }]}>
@@ -11,8 +59,65 @@ const HomeScreen = () => {
         <Appbar.Content title="Search destination" />
       </Appbar.Header>
 
-      <View>
-        <Text>Welcome to the home screen</Text>
+      <View style={styles.container}>
+        <Card mode="contained">
+          <Card.Content>
+            <DestinationInput
+              label="From"
+              value={fromText}
+              onSelect={(text) => {
+                setFromText(text);
+                if (text) setErrors((prev) => ({ ...prev, from: "" }));
+              }}
+              destinations={CITIES}
+              isError={!!errors.from}
+            />
+            {errors.from && (
+              <HelperText type="error" visible={!!errors.from}>
+                {errors.from}
+              </HelperText>
+            )}
+
+            <View style={styles.swapIcon}>
+              <IconButton
+                icon="swap-vertical"
+                size={30}
+                mode="outlined"
+                onPress={handleSwap}
+              />
+            </View>
+
+            <DestinationInput
+              label="To"
+              value={toText}
+              onSelect={(text) => {
+                setToText(text);
+                if (text) setErrors((prev) => ({ ...prev, to: "" }));
+              }}
+              destinations={CITIES}
+              isError={!!errors.to}
+            />
+
+            {errors.to && (
+              <HelperText type="error" visible={!!errors.to}>
+                {errors.to}
+              </HelperText>
+            )}
+          </Card.Content>
+        </Card>
+
+        <View style={styles.buttonContainer}>
+          <Button
+            mode="contained"
+            onPress={() => handleSearch()}
+            icon="magnify"
+            style={styles.primaryButton}
+            contentStyle={styles.buttonHeight}
+            labelStyle={styles.primaryButtonLabel}
+          >
+            Search
+          </Button>
+        </View>
       </View>
     </Surface>
   );
@@ -20,6 +125,33 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
   rootSurface: { flex: 1 },
+
+  container: {
+    padding: 16,
+  },
+
+  swapIcon: {
+    alignItems: "center",
+    margin: 5,
+  },
+
+  buttonContainer: {
+    marginTop: 20,
+    gap: 8,
+  },
+
+  primaryButton: {
+    borderRadius: 8,
+  },
+
+  primaryButtonLabel: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+
+  buttonHeight: {
+    height: 52,
+  },
 });
 
 export default HomeScreen;
