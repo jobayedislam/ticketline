@@ -16,6 +16,8 @@ import {
 } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+type next = "SEARCH" | "RECENT" | "PROFILE";
+
 const HomeScreen = () => {
   const insets = useSafeAreaInsets();
   const [fromText, setFromText] = useState<string>("");
@@ -28,6 +30,7 @@ const HomeScreen = () => {
   });
   const { isLoading, navigateWithDelay } = useDelayedNavigation();
   const { setTripDetails } = useBooking();
+  const [nextPage, setNextPage] = useState<next>("SEARCH");
 
   const handleSwap = () => {
     const temp = fromText;
@@ -72,13 +75,33 @@ const HomeScreen = () => {
         day,
       });
 
+      setNextPage("SEARCH");
       navigateWithDelay("/bus-results", 1000);
     }
   };
 
+  const handleRecent = () => {
+    setNextPage("RECENT");
+    navigateWithDelay("/recent-tickets", 1000);
+  };
+
+  const handleProfile = async () => {
+    setNextPage("PROFILE");
+    navigateWithDelay("/profile", 1000);
+  };
+
   return (
     <Surface style={[styles.rootSurface, { paddingBottom: insets.bottom }]}>
-      <LoadingOverlay visible={isLoading} message="Loading search results" />
+      {nextPage === "SEARCH" && (
+        <LoadingOverlay visible={isLoading} message="Loading search results" />
+      )}
+      {nextPage === "RECENT" && (
+        <LoadingOverlay visible={isLoading} message="Loading recent tickets" />
+      )}
+      {nextPage === "PROFILE" && (
+        <LoadingOverlay visible={isLoading} message="Loading your profile" />
+      )}
+
       <Appbar.Header>
         <Appbar.Content title="Search destination" />
       </Appbar.Header>
@@ -159,6 +182,26 @@ const HomeScreen = () => {
           >
             Search
           </Button>
+          <View style={styles.footerButtons}>
+            <Button
+              mode="outlined"
+              onPress={() => handleRecent()}
+              icon="ticket"
+              style={styles.secondaryButton}
+              contentStyle={styles.buttonHeight}
+            >
+              Recent Tickets
+            </Button>
+            <Button
+              mode="outlined"
+              onPress={() => handleProfile()}
+              icon="account"
+              style={styles.secondaryButton}
+              contentStyle={styles.buttonHeight}
+            >
+              Go to profile
+            </Button>
+          </View>
         </View>
       </View>
     </Surface>
@@ -195,8 +238,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
+  secondaryButton: {
+    borderRadius: 8,
+  },
+
   buttonHeight: {
     height: 52,
+  },
+
+  footerButtons: {
+    gap: 10,
+    marginTop: 30,
   },
 });
 
