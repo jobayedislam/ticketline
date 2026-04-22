@@ -14,6 +14,7 @@ export default function RootLayout() {
             name="ticket-confirm"
             options={{ headerShown: false }}
           />
+          <Stack.Screen name="payment" options={{ headerShown: false }} />
         </Stack>
       </BookingProvider>
     </PaperProvider>
