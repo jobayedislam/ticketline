@@ -9,6 +9,7 @@ export default function RootLayout() {
         <Stack>
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="bus-results" options={{ headerShown: false }} />
+          <Stack.Screen name="select-seats" options={{ headerShown: false }} />
         </Stack>
       </BookingProvider>
     </PaperProvider>
