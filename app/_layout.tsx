@@ -16,6 +16,10 @@ export default function RootLayout() {
           />
           <Stack.Screen name="payment" options={{ headerShown: false }} />
           <Stack.Screen name="ticket" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="recent-tickets"
+            options={{ headerShown: false }}
+          />
         </Stack>
       </BookingProvider>
     </PaperProvider>
