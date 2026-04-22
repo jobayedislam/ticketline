@@ -187,3 +187,95 @@ const ROUTE_PRICES: Record<string, { ac: number; nonAc: number }> = {
   "khulna-barishal": { ac: 700, nonAc: 400 },
   default: { ac: 1200, nonAc: 650 },
 };
+
+const getRandomInt = (min: number, max: number) =>
+  Math.floor(Math.random() * (max - min + 1)) + min;
+
+const getRandomItem = <T>(array: T[]): T =>
+  array[Math.floor(Math.random() * array.length)];
+
+const formatTime = (date: Date): string => {
+  return date.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+};
+
+export const getSeatLabel = (index: number): string => {
+  const rowId = Math.floor(index / 4);
+  const colId = (index % 4) + 1;
+  const rowLetter = String.fromCharCode(65 + rowId);
+  return `${rowLetter}${colId}`;
+};
+
+export const generateTxnId = () => {
+  return `TL-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
+};
+
+export const generateBusData = (criteria: TripDetailsType): BusTicketData[] => {
+  const { from, to, month, day } = criteria;
+  const fromClean = from.trim().toLowerCase();
+  const toClean = to.trim().toLowerCase();
+  const numberOfBuses = getRandomInt(5, 10);
+  const buses: BusTicketData[] = [];
+  const regionalPrefixes = [
+    "Dhaka",
+    "Chattogram",
+    "Sylhet",
+    "Rajshahi",
+    "Khulna",
+  ];
+  const letterPrefixes = ["Cha", "Da", "Ha", "Za", "Ba", "Ra", "La"];
+  const baseDate = new Date(`2026-01-01T00:00:00Z`);
+  const availableBoardingPoints =
+    BOARDING_POINTS[fromClean] || GENERIC_BOARDING_POINTS;
+  const basePrices =
+    ROUTE_PRICES[`${fromClean}-${toClean}`] ||
+    ROUTE_PRICES[`${toClean}-${fromClean}`] ||
+    ROUTE_PRICES["default"];
+
+  for (let i = 0; i < numberOfBuses; i++) {
+    const isAC = Math.random() > 0.5;
+
+    const totalSeats = isAC ? getRandomItem([28, 32]) : getRandomItem([36, 40]);
+
+    const numUnavailable = getRandomInt(2, totalSeats - 5);
+    const unavailableSeats: string[] = [];
+    while (unavailableSeats.length < numUnavailable) {
+      const seatIndex = getRandomInt(0, totalSeats - 1);
+      const label = getSeatLabel(seatIndex);
+      if (!unavailableSeats.includes(label)) {
+        unavailableSeats.push(label);
+      }
+    }
+
+    baseDate.setHours(getRandomInt(6, 23), getRandomItem([0, 15, 30, 45]));
+    const startingTime = formatTime(baseDate);
+
+    const reportingDate = new Date(baseDate.getTime() - 15 * 60000);
+    const reportingTime = formatTime(reportingDate);
+
+    const priceVariation = Math.floor(Math.random() * 5) * 50 - 50;
+    const price = (isAC ? basePrices.ac : basePrices.nonAc) + priceVariation;
+
+    buses.push({
+      busId: `B-${Math.random().toString(36).substring(2, 9).toUpperCase()}-${day}${month.substring(0, 3).toUpperCase()}`,
+      company: getRandomItem(BUS_COMPANIES),
+      busNumber: `${getRandomItem(regionalPrefixes)} Metro-${getRandomItem(letterPrefixes)} ${getRandomInt(11, 15)}-${getRandomInt(1000, 9999)}`,
+      type: isAC ? "AC" : "Non-AC",
+      totalSeats,
+      unavailableSeats,
+      startingTime,
+      reportingTime,
+      boardingPoint: getRandomItem(availableBoardingPoints),
+      price,
+    });
+  }
+
+  return buses.sort((a, b) => {
+    const timeA = new Date(`1970/01/01 ${a.startingTime}`);
+    const timeB = new Date(`1970/01/01 ${b.startingTime}`);
+    return timeA.getTime() - timeB.getTime();
+  });
+};
