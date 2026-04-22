@@ -1,6 +1,7 @@
 import DestinationInput from "@/components/DestinationInput";
+import LoadingOverlay from "@/components/LoadingOverlay";
 import { CITIES } from "@/data/data";
-import { useRouter } from "expo-router";
+import useDelayedNavigation from "@/utils/DelayedNavigation";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import {
@@ -15,7 +16,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const HomeScreen = () => {
   const insets = useSafeAreaInsets();
-  const router = useRouter();
   const [fromText, setFromText] = useState<string>("");
   const [toText, setToText] = useState<string>("");
   const [errors, setErrors] = useState({
@@ -23,6 +23,7 @@ const HomeScreen = () => {
     to: "",
     date: "",
   });
+  const { isLoading, navigateWithDelay } = useDelayedNavigation();
 
   const handleSwap = () => {
     const temp = fromText;
@@ -51,12 +52,13 @@ const HomeScreen = () => {
     setErrors(newErrors);
 
     if (valid) {
-      router.navigate("/bus-results");
+      navigateWithDelay("/bus-results", 1000);
     }
   };
 
   return (
     <Surface style={[styles.rootSurface, { paddingBottom: insets.bottom }]}>
+      <LoadingOverlay visible={isLoading} message="Loading search results" />
       <Appbar.Header>
         <Appbar.Content title="Search destination" />
       </Appbar.Header>
