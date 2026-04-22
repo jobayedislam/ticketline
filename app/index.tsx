@@ -134,6 +134,7 @@ const HomeScreen = () => {
           <Card.Content>
             <TravelDateInput
               value={dateText}
+              isError={!!errors.date}
               onPick={(date) => {
                 setDateText(date);
                 if (date) setErrors((prev) => ({ ...prev, date: "" }));

@@ -10,10 +10,15 @@ registerTranslation("en-GB", enGB);
 
 interface TravelDateInputProps {
   value: Date | undefined;
+  isError: boolean;
   onPick: (date: Date | undefined) => void;
 }
 
-const TravelDateInput: React.FC<TravelDateInputProps> = ({ value, onPick }) => {
+const TravelDateInput: React.FC<TravelDateInputProps> = ({
+  value,
+  isError = false,
+  onPick,
+}) => {
   const [visible, setVisible] = useState(false);
 
   const formatDate = (date: Date | undefined) => {
@@ -46,6 +51,7 @@ const TravelDateInput: React.FC<TravelDateInputProps> = ({ value, onPick }) => {
             placeholder="Select Date"
             left={<TextInput.Icon icon="calendar" />}
             editable={false}
+            error={isError}
           />
         </View>
       </Pressable>
