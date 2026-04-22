@@ -1,3 +1,23 @@
+export interface TripDetailsType {
+  from: string;
+  to: string;
+  month: string;
+  day: string;
+}
+
+export interface BusTicketData {
+  busId: string;
+  company: string;
+  busNumber: string;
+  type: "AC" | "Non-AC";
+  totalSeats: number;
+  unavailableSeats: string[];
+  startingTime: string;
+  reportingTime: string;
+  boardingPoint: string;
+  price: number;
+}
+
 export const CITIES: string[] = [
   "Dhaka",
   "Chattogram",
