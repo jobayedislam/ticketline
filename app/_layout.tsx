@@ -20,6 +20,7 @@ export default function RootLayout() {
             name="recent-tickets"
             options={{ headerShown: false }}
           />
+          <Stack.Screen name="profile" options={{ headerShown: false }} />
         </Stack>
       </BookingProvider>
     </PaperProvider>
