@@ -1,3 +1,4 @@
+import UnderConstruction from "@/components/UnderConstruction";
 import { useRouter } from "expo-router";
 import { StyleSheet } from "react-native";
 import { Appbar, Surface } from "react-native-paper";
@@ -14,6 +15,7 @@ const BusResults = () => {
         <Appbar.Content title="Pick a bus" />
         <Appbar.Action icon="home" onPress={() => router.replace("/")} />
       </Appbar.Header>
+      <UnderConstruction />
     </Surface>
   );
 };
