@@ -15,6 +15,7 @@ export default function RootLayout() {
             options={{ headerShown: false }}
           />
           <Stack.Screen name="payment" options={{ headerShown: false }} />
+          <Stack.Screen name="ticket" options={{ headerShown: false }} />
         </Stack>
       </BookingProvider>
     </PaperProvider>
