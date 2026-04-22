@@ -2,6 +2,10 @@
 
 A React Native bus ticket booking app built with Expo.
 
+## Project Context
+
+TicketLine was developed as a college group project. I served as the team lead and was responsible for the complete application development, including architecture, implementation, and core feature design. The rest of the team contributed to non-technical aspects of the project.
+
 ## Features
 
 - Browse available buses between cities
