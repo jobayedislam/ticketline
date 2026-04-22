@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import { Surface, Text } from "react-native-paper";
+import { Appbar, Surface, Text } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const HomeScreen = () => {
@@ -7,6 +7,10 @@ const HomeScreen = () => {
 
   return (
     <Surface style={[styles.rootSurface, { paddingBottom: insets.bottom }]}>
+      <Appbar.Header>
+        <Appbar.Content title="Search destination" />
+      </Appbar.Header>
+
       <View>
         <Text>Welcome to the home screen</Text>
       </View>
