@@ -1,5 +1,6 @@
 import DestinationInput from "@/components/DestinationInput";
 import LoadingOverlay from "@/components/LoadingOverlay";
+import TravelDateInput from "@/components/TravelDateInput";
 import { CITIES } from "@/data/data";
 import useDelayedNavigation from "@/utils/DelayedNavigation";
 import { useState } from "react";
@@ -18,6 +19,7 @@ const HomeScreen = () => {
   const insets = useSafeAreaInsets();
   const [fromText, setFromText] = useState<string>("");
   const [toText, setToText] = useState<string>("");
+  const [dateText, setDateText] = useState<Date | undefined>(undefined);
   const [errors, setErrors] = useState({
     from: "",
     to: "",
@@ -46,6 +48,10 @@ const HomeScreen = () => {
     if (fromText && toText && fromText === toText) {
       newErrors.from = "Starting and destination point cannot be the same.";
       newErrors.to = "Starting and destination point cannot be the same.";
+      valid = false;
+    }
+    if (!dateText || dateText === undefined) {
+      newErrors.date = "Please select a travel date";
       valid = false;
     }
 
@@ -110,6 +116,23 @@ const HomeScreen = () => {
           </Card.Content>
         </Card>
 
+        <Card mode="contained" style={styles.dateCard}>
+          <Card.Content>
+            <TravelDateInput
+              value={dateText}
+              onPick={(date) => {
+                setDateText(date);
+                if (date) setErrors((prev) => ({ ...prev, date: "" }));
+              }}
+            />
+            {errors.date && (
+              <HelperText type="error" visible={!!errors.date}>
+                {errors.date}
+              </HelperText>
+            )}
+          </Card.Content>
+        </Card>
+
         <View style={styles.buttonContainer}>
           <Button
             mode="contained"
@@ -137,6 +160,10 @@ const styles = StyleSheet.create({
   swapIcon: {
     alignItems: "center",
     margin: 5,
+  },
+
+  dateCard: {
+    marginTop: 20,
   },
 
   buttonContainer: {
