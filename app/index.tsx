@@ -1,9 +1,12 @@
 import { StyleSheet, View } from "react-native";
 import { Surface, Text } from "react-native-paper";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const HomeScreen = () => {
+  const insets = useSafeAreaInsets();
+
   return (
-    <Surface style={styles.rootSurface}>
+    <Surface style={[styles.rootSurface, { paddingBottom: insets.bottom }]}>
       <View>
         <Text>Welcome to the home screen</Text>
       </View>
