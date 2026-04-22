@@ -1,5 +1,6 @@
 import DestinationInput from "@/components/DestinationInput";
 import { CITIES } from "@/data/data";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import {
@@ -14,6 +15,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const HomeScreen = () => {
   const insets = useSafeAreaInsets();
+  const router = useRouter();
   const [fromText, setFromText] = useState<string>("");
   const [toText, setToText] = useState<string>("");
   const [errors, setErrors] = useState({
@@ -49,7 +51,7 @@ const HomeScreen = () => {
     setErrors(newErrors);
 
     if (valid) {
-      console.log("Do something");
+      router.navigate("/bus-results");
     }
   };
 
