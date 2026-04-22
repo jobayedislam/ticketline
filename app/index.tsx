@@ -1,6 +1,7 @@
 import DestinationInput from "@/components/DestinationInput";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import TravelDateInput from "@/components/TravelDateInput";
+import { useBooking } from "@/context/BookingContext";
 import { CITIES } from "@/data/data";
 import useDelayedNavigation from "@/utils/DelayedNavigation";
 import { useState } from "react";
@@ -26,6 +27,7 @@ const HomeScreen = () => {
     date: "",
   });
   const { isLoading, navigateWithDelay } = useDelayedNavigation();
+  const { setTripDetails } = useBooking();
 
   const handleSwap = () => {
     const temp = fromText;
@@ -58,6 +60,18 @@ const HomeScreen = () => {
     setErrors(newErrors);
 
     if (valid) {
+      let month =
+        dateText !== undefined
+          ? dateText.toLocaleString("default", { month: "long" })
+          : "";
+      let day = dateText !== undefined ? dateText?.getDate().toString() : "";
+      setTripDetails({
+        from: fromText,
+        to: toText,
+        month,
+        day,
+      });
+
       navigateWithDelay("/bus-results", 1000);
     }
   };
