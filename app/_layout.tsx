@@ -6,6 +6,7 @@ export default function RootLayout() {
     <PaperProvider>
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="bus-results" options={{ headerShown: false }} />
       </Stack>
     </PaperProvider>
   );
