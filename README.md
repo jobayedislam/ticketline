@@ -18,6 +18,7 @@ TicketLine was developed as a college group project. I served as the team lead a
 - React Native
 - Expo
 - TypeScript
+- React Native Paper (UI components)
 
 ## Getting Started
 
