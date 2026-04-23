@@ -1,11 +1,8 @@
 import { AuthProvider, useAuth } from "@/context/AuthContext";
 import { BookingProvider } from "@/context/BookingContext";
 import { Stack, useRouter, useSegments } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { PaperProvider } from "react-native-paper";
-
-SplashScreen.preventAutoHideAsync();
 
 function NavigationGuard() {
   const { user, isLoading } = useAuth();
