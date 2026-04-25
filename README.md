@@ -35,6 +35,16 @@ This enables a fully functional booking flow entirely on the client side.
 - TypeScript
 - React Native Paper (UI components)
 
+## Screenshots
+
+| Search                                                 | Results                                                | Seat Selection                                         |
+| ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ |
+| ![Screenshot 01](assets/screenshots/screenshot-01.png) | ![Screenshot 02](assets/screenshots/screenshot-02.png) | ![Screenshot 03](assets/screenshots/screenshot-03.png) |
+
+| Payment                                                | Ticket                                                 |
+| ------------------------------------------------------ | ------------------------------------------------------ |
+| ![Screenshot 04](assets/screenshots/screenshot-04.png) | ![Screenshot 05](assets/screenshots/screenshot-05.png) |
+
 ## Getting Started
 
 ```bash
