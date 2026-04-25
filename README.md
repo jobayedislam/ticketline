@@ -17,6 +17,18 @@ TicketLine was developed as a college group project. I served as the team lead a
 - Booking summary flow
 - Dynamic data simulation (no backend required)
 
+## Data Simulation Engine
+
+Instead of a backend, TicketLine uses a custom-built data generator that simulates:
+
+- Route-based bus availability
+- Seat occupancy per trip
+- Pricing variations
+- Departure and reporting times
+- Boarding points
+
+This enables a fully functional booking flow entirely on the client side.
+
 ## Tech Stack
 
 - React Native
