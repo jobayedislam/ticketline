@@ -31,8 +31,7 @@ This enables a fully functional booking flow entirely on the client side.
 
 ## Tech Stack
 
-- React Native
-- Expo
+- React Native (Expo)
 - TypeScript
 - React Native Paper (UI components)
 
