@@ -33,10 +33,6 @@ npm install
 npx expo start
 ```
 
-## Notes
-
-This app uses a custom client-side data generator to simulate backend behavior in real time.
-
 ## License
 
 MIT
